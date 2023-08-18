@@ -4,7 +4,7 @@ import SwiftUI
 public struct EDRQRCodeView: View {
   @StateObject var viewModel: EDRQRCodeViewModel
 
-  init(qrCodeTextContent: String, imageRenderSize: CGSize) {
+  public init(qrCodeTextContent: String, imageRenderSize: CGSize) {
     _viewModel = StateObject(
       wrappedValue: .init(
         qrCodeTextContent: qrCodeTextContent,
