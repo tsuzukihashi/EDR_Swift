@@ -6,8 +6,12 @@ It is one of Apple's HDR technologies called Extended Dynamic Range
 
 # Usage
 
+## Add Package Dependencies
+<img width="835" alt="スクリーンショット 2023-08-19 0 34 25" src="https://github.com/tsuzukihashi/EDR_Swift/assets/19743978/d66d22d9-2cfc-47f9-90d5-8244c9af3b0b">
+
 
 ## EDRQRCodeView
+
 ```swift
 import SwiftUI
 /** import */
