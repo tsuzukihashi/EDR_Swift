@@ -1,2 +1,3 @@
 # EDR_Swift
-I want to use EDR features easily.
+
+A description of this package.
