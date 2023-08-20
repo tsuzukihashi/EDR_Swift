@@ -4,7 +4,9 @@ It is one of Apple's HDR technologies called Extended Dynamic Range
 
 Note! EDR is for iOS 16 and above.
 
-<img src="https://github.com/tsuzukihashi/EDR_Swift/assets/19743978/0d2a90ad-5eb2-4a62-aba5-0fbf6eb90239" width=320>
+| QR | Barcode |
+| -- | -- |
+| <img src="https://github.com/tsuzukihashi/EDR_Swift/assets/19743978/d334dc02-89dc-40e4-97f6-a69491a9d71c" width=320> | <img src="https://github.com/tsuzukihashi/EDR_Swift/assets/19743978/29b3ea47-5042-4946-84a3-229294b13d24" width=320> |
 
 # Usage
 
