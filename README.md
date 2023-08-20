@@ -56,3 +56,7 @@ struct ContentView: View {
 }
 ```
 <img src="https://github.com/tsuzukihashi/EDR_Swift/assets/19743978/6f917b23-aee0-4e7a-8e72-9d92e60eb616" width=320>
+
+## structure
+![‎iOSDC2023_LT ‎013](https://github.com/tsuzukihashi/EDR_Swift/assets/19743978/389165b4-9ae8-45f5-9f65-dc16b38e9ae2)
+
