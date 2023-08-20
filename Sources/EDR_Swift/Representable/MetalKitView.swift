@@ -22,10 +22,6 @@ public struct MetalKitView: UIViewRepresentable {
   }
 
   public func updateUIView(_ view: MTKView, context: Context) {
-    configure(view: view, using: renderer)
-  }
-
-  private func configure(view: MTKView, using renderer: Renderer) {
     view.delegate = renderer
   }
 }
