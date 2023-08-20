@@ -28,11 +28,31 @@ struct ContentView: View {
       - Size
      */
     EDRQRCodeView(
-      qrCodeTextContent: "https://bento.me/tsuzuki817",
-      imageRenderSize: .init(width: 300, height: 300)
+      content: "https://bento.me/tsuzuki817",
+      size: .init(width: 300, height: 300)
     )
     .frame(width: 300, height: 300)
   }
 }
 ```
 <img src="https://github.com/tsuzukihashi/EDR_Swift/assets/19743978/c3c6b573-ed0e-44ec-affe-f203185d6dc2" width=320>
+
+
+## EDRBarcodeCodeView
+
+```swift
+import SwiftUI
+/** import */
+import EDR_Swift
+
+struct ContentView: View {
+  var body: some View {
+    EDRBarcodeView(
+      content: "https://bento.me/tsuzuki817",
+      size: .init(width: 320, height: 100)
+    )
+    .frame(width: 320, height: 100)
+  }
+}
+```
+<img src="https://github.com/tsuzukihashi/EDR_Swift/assets/19743978/6f917b23-aee0-4e7a-8e72-9d92e60eb616" width=320>
