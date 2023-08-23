@@ -4,8 +4,6 @@ import CoreImage
 
 @available(iOS 16.0, *)
 public final class Renderer: NSObject, ObservableObject {
-  @Published var currentHeadroom: CGFloat = 1.0
-
   public let device: MTLDevice? = MTLCreateSystemDefaultDevice()
   private let commandQueue: MTLCommandQueue?
   private let renderContext: CIContext?
@@ -60,10 +58,8 @@ extension Renderer: MTKViewDelegate {
             return drawable.texture
           })
 
-        // calculate the maximum supported EDR value (headroom)
         var headroom = CGFloat(1.0)
         headroom = view.window?.screen.currentEDRHeadroom ?? 1.0
-        currentHeadroom = headroom
 
         // Get the CI image to be displayed from the delegate function
         guard var image = self.imageProvider(contentScaleFactor, headroom) else {
