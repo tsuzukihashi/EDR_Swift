@@ -18,6 +18,7 @@ public struct MetalKitView: UIViewRepresentable {
       )
       view.colorPixelFormat = MTLPixelFormat.rgba16Float
     }
+
     return view
   }
 

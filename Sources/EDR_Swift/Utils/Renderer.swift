@@ -32,12 +32,10 @@ public final class Renderer: NSObject, ObservableObject {
 
 extension Renderer: MTKViewDelegate {
   public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-    // Respond to drawable size or orientation changes.
   }
 
   public func draw(in view: MTKView) {
     guard let commandQueue else { return }
-    // wait for previous render to complete
     _ = renderQueue.wait(timeout: DispatchTime.distantFuture)
 
     if let commandBuffer = commandQueue.makeCommandBuffer() {
@@ -61,7 +59,6 @@ extension Renderer: MTKViewDelegate {
         var headroom = CGFloat(1.0)
         headroom = view.window?.screen.currentEDRHeadroom ?? 1.0
 
-        // Get the CI image to be displayed from the delegate function
         guard var image = self.imageProvider(contentScaleFactor, headroom) else {
           return
         }
