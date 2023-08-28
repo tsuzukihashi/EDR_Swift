@@ -31,67 +31,55 @@ public final class Renderer: NSObject, ObservableObject {
 }
 
 extension Renderer: MTKViewDelegate {
-  public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-  }
+  public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {}
 
   public func draw(in view: MTKView) {
-    guard let commandQueue else { return }
+    guard let commandQueue, let renderContext else { return }
     _ = renderQueue.wait(timeout: DispatchTime.distantFuture)
 
-    if let commandBuffer = commandQueue.makeCommandBuffer() {
-      commandBuffer.addCompletedHandler { (_ commandBuffer)-> Swift.Void in
-        self.renderQueue.signal()
-      }
-
-      if let drawable = view.currentDrawable {
-
-        let drawSize = view.drawableSize
-        let contentScaleFactor = view.contentScaleFactor
-        let destination = CIRenderDestination(
-          width: Int(drawSize.width),
-          height: Int(drawSize.height),
-          pixelFormat: view.colorPixelFormat,
-          commandBuffer: commandBuffer,
-          mtlTextureProvider: { () -> MTLTexture in
-            return drawable.texture
-          })
-
-        var headroom = CGFloat(1.0)
-        headroom = view.window?.screen.currentEDRHeadroom ?? 1.0
-
-        guard var image = self.imageProvider(contentScaleFactor, headroom) else {
-          return
-        }
-
-        // Center the image in the view's visible area.
-        let iRect = image.extent
-        let backBounds = CGRect(
-          x: 0,
-          y: 0,
-          width: drawSize.width,
-          height: drawSize.height
-        )
-        let shiftX = round((backBounds.size.width + iRect.origin.x - iRect.size.width) * 0.5)
-        let shiftY = round((backBounds.size.height + iRect.origin.y - iRect.size.height) * 0.5)
-
-        image = image.transformed(by: CGAffineTransform(translationX: shiftX, y: shiftY))
-
-        // provide a background if the image is transparent
-        image = image.composited(over: .gray)
-
-        // Start a task that renders to the texture destination.
-        guard let renderContext else { return }
-        _ = try? renderContext.startTask(
-          toRender: image,
-          from: backBounds,
-          to: destination,
-          at: CGPoint.zero
-        )
-
-        // show rendered work and commit render task
-        commandBuffer.present(drawable)
-        commandBuffer.commit()
-      }
+    guard let commandBuffer = commandQueue.makeCommandBuffer() else { return }
+    commandBuffer.addCompletedHandler { [weak self] _ in
+      self?.renderQueue.signal()
     }
+
+    guard let drawable = view.currentDrawable else { return }
+    let drawSize = view.drawableSize
+    let contentScaleFactor = view.contentScaleFactor
+
+    let destination = CIRenderDestination(
+      width: Int(drawSize.width),
+      height: Int(drawSize.height),
+      pixelFormat: view.colorPixelFormat,
+      commandBuffer: commandBuffer,
+      mtlTextureProvider: { () -> MTLTexture in
+        return drawable.texture
+      }
+    )
+
+    var headroom = CGFloat(1.0)
+    headroom = view.window?.screen.currentEDRHeadroom ?? 1.0
+    guard var image = self.imageProvider(contentScaleFactor, headroom) else { return }
+    let iRect = image.extent
+    let backBounds = CGRect(
+      x: 0,
+      y: 0,
+      width: drawSize.width,
+      height: drawSize.height
+    )
+    let shiftX = round((backBounds.size.width + iRect.origin.x - iRect.size.width) * 0.5)
+    let shiftY = round((backBounds.size.height + iRect.origin.y - iRect.size.height) * 0.5)
+
+    image = image.transformed(by: CGAffineTransform(translationX: shiftX, y: shiftY))
+    image = image.composited(over: .gray)
+
+    _ = try? renderContext.startTask(
+      toRender: image,
+      from: backBounds,
+      to: destination,
+      at: .zero
+    )
+
+    commandBuffer.present(drawable)
+    commandBuffer.commit()
   }
 }
