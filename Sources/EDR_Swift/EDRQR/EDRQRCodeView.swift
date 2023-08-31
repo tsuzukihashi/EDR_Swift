@@ -17,4 +17,3 @@ public struct EDRQRCodeView: View {
     MetalKitView(renderer: viewModel.renderer)
   }
 }
-
