@@ -13,8 +13,10 @@ public class EDRBarcodeViewModel: ObservableObject {
       )
       image = image.transformed(by: sizeTransform)
       
-      guard let colorSpace = CGColorSpace(name: CGColorSpace.extendedLinearSRGB),
-            let maxFillColor = CIColor(red: headroom, green: headroom, blue: headroom, colorSpace: colorSpace) else {
+      guard
+        let colorSpace = CGColorSpace(name: CGColorSpace.extendedLinearSRGB),
+        let maxFillColor = CIColor(red: headroom, green: headroom, blue: headroom, colorSpace: colorSpace)
+      else {
         return nil
       }
 
