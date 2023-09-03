@@ -56,8 +56,7 @@ extension Renderer: MTKViewDelegate {
       }
     )
 
-    var headroom = CGFloat(1.0)
-    headroom = view.window?.screen.currentEDRHeadroom ?? 1.0
+    let headroom: CGFloat = view.window?.screen.currentEDRHeadroom ?? 1.0
     guard var image = self.imageProvider(contentScaleFactor, headroom) else { return }
     let iRect = image.extent
     let backBounds = CGRect(
